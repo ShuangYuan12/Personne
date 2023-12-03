@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
+  "uuid": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d@6c48a",
+      "displayName": "graveyard_rock_light",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d@f9941",
+      "displayName": "graveyard_rock_light",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1030,
+        "offsetY": 41.5,
+        "trimX": 540,
+        "trimY": 697,
+        "width": 1360,
+        "height": 1523,
+        "rawWidth": 4500,
+        "rawHeight": 3000,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -680,
+            -761.5,
+            0,
+            680,
+            -761.5,
+            0,
+            -680,
+            761.5,
+            0,
+            680,
+            761.5,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            540,
+            2303,
+            1900,
+            2303,
+            540,
+            780,
+            1900,
+            780
+          ],
+          "nuv": [
+            0.12,
+            0.26,
+            0.4222222222222222,
+            0.26,
+            0.12,
+            0.7676666666666667,
+            0.4222222222222222,
+            0.7676666666666667
+          ],
+          "minPos": [
+            -680,
+            -761.5,
+            0
+          ],
+          "maxPos": [
+            680,
+            761.5,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.11",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "17fd1da5-614e-4553-b0b6-3b5de2cfcb8d@f9941"
+  }
+}

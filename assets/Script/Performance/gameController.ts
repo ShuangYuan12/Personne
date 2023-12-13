@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Label, log, Node, Prefab, random, Vec3 } from 'cc';
+import { _decorator, Button, Component, instantiate, Label, log, Node, Prefab, random, Sprite, SpriteFrame, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('gameController')
@@ -13,6 +13,11 @@ export class gameController extends Component {
 
     @property(Prefab)
     cylinder: Prefab;
+
+    @property(SpriteFrame)
+    wood: SpriteFrame;
+    @property(SpriteFrame)
+    wood2: SpriteFrame;
 
     @property(Label)
     scoreLb: Label;
@@ -40,6 +45,13 @@ export class gameController extends Component {
                     let posY = random() * 400 - 200;
 
                     let addCyl = instantiate(this.cylinder);
+                    let s = addCyl.getComponent(Sprite);
+                    
+                    if(random() < 0.5)
+                        s.spriteFrame = this.wood;
+                    else
+                        s.spriteFrame = this.wood2;
+
                     addCyl.setPosition(posX, posY, 0);
                     addCyl.setScale(scale, scale, 1);
                     addCyl.parent = this.node;

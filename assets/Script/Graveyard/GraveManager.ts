@@ -1,4 +1,4 @@
-import { _decorator, Component, director, log, Node, Sprite, tween, UIOpacity } from 'cc';
+import { _decorator, Color, Component, director, log, Node, Sprite, tween, UIOpacity } from 'cc';
 import { GameManager } from '../GameManager';
 import { Grave } from './Grave';
 const { ccclass, property } = _decorator;
@@ -46,16 +46,35 @@ export class GraveManager extends Component {
                     .call(() => GE.dispatchCustomEvent('notFirstInGraveyard'))
                     .start();
             }
+            else{
+                tween(graveOpacity)
+                    .to(1, {opacity: 255})
+                    .call(() => {this.dialog.active = true})
+                    .delay(0.1)
+                    .call(() => GE.dispatchCustomEvent('allGraveComplete'))
+                    .start();
+            }
         }
 
         GE.addListener('startChooseGrave', () => {
 
             if (GameManager.status.stageFini == false)
                 this.node.getChildByName(graves.wood).addComponent(Grave);
-            if (GameManager.status.PerformanceFini == false)
+            if (GameManager.status.performanceFini == false)
                 this.node.getChildByName(graves.rock).addComponent(Grave);
-            if (GameManager.status.handsOnFini == false)
+            if (GameManager.status.catFini == false)
                 this.node.getChildByName(graves.diamond).addComponent(Grave);
+
+        }, this)
+
+        GE.addListener('toEnd',  () => {
+            
+            director.preloadScene('End');
+
+            tween(graveOpacity)
+                .to(1, {opacity: 0})
+                .call(() => director.loadScene('End'))
+                .start();
 
         }, this)
     }

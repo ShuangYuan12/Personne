@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Label, log, Node, NodePool, tween, UIOpacity, Vec2, Vec3 } from 'cc';
+import { _decorator, Color, color, ColorKey, Component, director, Label, log, Node, NodePool, tween, UIOpacity, Vec2, Vec3 } from 'cc';
 import { GameManager} from '../GameManager';
 import { GraveManager } from '../Graveyard/GraveManager';
 const { ccclass, property } = _decorator;
@@ -8,18 +8,20 @@ export class Dialog extends Component {
 
     @property(Label)
     text: Label;
-    @property(Label)
-    nameLabel: Label;
+    @property(Node)
+    dialogGhost: Node
 
     @property(Node)
-    dialogName: Node;
-
+    ghostFull: Node;
     @property(Node)
     ghost: Node;
+    @property(Node)
+    desk: Node;
 
     start() {
 
         let dialogOpacity = this.node.getComponent(UIOpacity);
+        let dialogColor = new Color (219, 191, 149);
 
         let dialogText = [
             { name: "", dialog: "明天早上期末考、下午要報告、" },
@@ -36,15 +38,27 @@ export class Dialog extends Component {
 
             director.preloadScene('Graveyard');
 
-            this.ghost.active = true;
-            tween(this.ghost)
-                .to(1, { position: new Vec3(0, 0, 0) })
+            this.ghostFull.active = true;
+            tween(this.ghostFull)
+                .to(1, { position: new Vec3(0, 0, 0) }, {easing: 'backInOut'})
+                .delay(0.1)
+                .parallel(
+                    tween(this.ghostFull)
+                        .to(1, {position: new Vec3(970, 0, 0)}, {easing: 'backInOut'}),
+
+                    tween(this.ghostFull)
+                        .delay(0.5)
+                        .call(() => {
+                            this.desk.active = false;
+                            this.ghost.active = false;
+                        })
+                )
                 .delay(0.1)
                 .call(() => director.loadScene('Graveyard'))
                 .start();
         }
 
-        GE.addListener('dialogWhenDesk', () => GameManager.dialog(this, this.text, dialogText, this.dialogName, this.nameLabel, dialogOpacity, ghostTransition), this)
+        GE.addListener('dialogWhenDesk', () => GameManager.dialog(this, this.text, dialogText, this.dialogGhost, dialogColor, dialogOpacity, ghostTransition), this)
 
     }
 

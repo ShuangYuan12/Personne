@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Label, log, Node, UIOpacity, EventTarget, Button, tween } from 'cc';
+import { _decorator, Component, director, Label, log, Node, UIOpacity, EventTarget, Button, tween, Color } from 'cc';
 import { GameManager} from '../GameManager';
 const { ccclass, property } = _decorator;
 const evenTarget = new EventTarget();
@@ -9,9 +9,7 @@ export class DialogInStage extends Component {
     @property(Label)
     text: Label;
     @property(Node)
-    dialogName: Node;
-    @property(Label)
-    nameLabel: Label;
+    dialogGhost: Node;
 
     @property(Node)
     likeBtns: Node;
@@ -25,6 +23,7 @@ export class DialogInStage extends Component {
 
         let dialogOpacity = this.node.getComponent(UIOpacity);
         let murOpacity = this.songMurmur.getComponent(UIOpacity);
+        let dialogColor = new Color(156, 156, 197);
 
         let dialogText = [
             { name: "ghost", dialog: "♪♪♪♪♪" },
@@ -50,10 +49,8 @@ export class DialogInStage extends Component {
 
         let dialogAfSuccess = [
             {name: "ghost", dialog: "好聽！好聽！"},
-            {name: "ghost", dialog: "這個音樂盒送你當紀念吧"}, //有聚光燈的公仔
+            {name: "ghost", dialog: "這個音樂盒送你當紀念吧"},
             {name: "ghost", dialog: "祝你玩得愉快～"},
-            {name: "", dialog: "（雖然不知道我在這裡做什麼）"},
-            {name: "", dialog: "（但這上面的公仔也滿可愛的）"}
         ];
 
         let dialogAfFail = [
@@ -85,26 +82,26 @@ export class DialogInStage extends Component {
                 .start()
         }
 
-        GE.addListener('dialogInStage', () => GameManager.dialog(this, this.text, dialogText, this.dialogName, this.nameLabel, dialogOpacity, likeChoose), this);
+        GE.addListener('dialogInStage', () => GameManager.dialog(this, this.text, dialogText, this.dialogGhost, dialogColor, dialogOpacity, likeChoose), this);
         GE.addListener('clickLike', () => {
             this.likeBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfLike, this.dialogName, this.nameLabel, dialogOpacity, songChoose)
+            GameManager.dialog(this, this.text, dialogAfLike, this.dialogGhost, dialogColor, dialogOpacity, songChoose)
         }, this)
         GE.addListener('clickDislike', () => {
             this.likeBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfDisLike, this.dialogName, this.nameLabel, dialogOpacity, songChoose)
+            GameManager.dialog(this, this.text, dialogAfDisLike, this.dialogGhost, dialogColor, dialogOpacity, songChoose)
         }, this)
         GE.addListener('success', () => {
             this.songBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfSuccess, this.dialogName, this.nameLabel, dialogOpacity, allDialogFin);
+            GameManager.dialog(this, this.text, dialogAfSuccess, this.dialogGhost, dialogColor, dialogOpacity, allDialogFin);
         }, this)
         GE.addListener('fail', () => {
             this.songBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfFail, this.dialogName, this.nameLabel, dialogOpacity, allDialogFin);
+            GameManager.dialog(this, this.text, dialogAfFail, this.dialogGhost, dialogColor, dialogOpacity, allDialogFin);
         }, this)
         
     }

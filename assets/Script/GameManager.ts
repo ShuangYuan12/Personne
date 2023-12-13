@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, director, tween, Label, log } from 'cc';
+import { _decorator, Component, Node, director, tween, Label, log, Vec3, SpriteAtlas, Sprite, Color } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -8,15 +8,16 @@ export class GameManager extends Component {
     public static status = {
         startToGraveyard: true,
         stageFini: false,
-        PerformanceFini: false,
-        handsOnFini: false
+        performanceFini: false,
+        catFini: false
     }
     //已通關數
     public static finiStage = 0;
     //興趣與性向紀錄
     public static record = {
         stage: {like: undefined, success: undefined},
-        performance: {like: undefined, success: undefined}
+        performance: {like: undefined, success: undefined},
+        cat: {like: undefined, success: undefined}
     };
 
     start() {
@@ -44,13 +45,13 @@ export class GameManager extends Component {
      * @param target target
      * @param label 對話文字
      * @param dialogText 對話內容陣列
-     * @param dialogName 名字Node
-     * @param nameLabel 名字文字
+     * @param dialogGhost 對話框鬼裝飾
+     * @param dialogColor 對話框顏色(默認白灰)
      * @param dialogOpacity 對話框UIOpacity
      * @param listenerName 監聽事件名
      * @param dialogFinishTodo 對話結束後callback
      */
-    public static dialog(target: any, label, dialogText, dialogName, nameLabel, dialogOpacity, dialogFinishTodo?: any) {
+    public static dialog(target: any, label, dialogText, dialogGhost, dialogColor: Color, dialogOpacity, dialogFinishTodo?: any) {
 
             GameManager.fade(dialogOpacity, 255, 0.2);
 
@@ -74,11 +75,12 @@ export class GameManager extends Component {
                     next = false;
 
                     if (dialogText[wordth].name != "") {
-                        dialogName.active = true;
-                        nameLabel.string = dialogText[wordth].name;
+                        dialogGhost.active = true;
+                        target.node.getComponent(Sprite).color = new Color(255, 255, 255);
                     }
                     else {
-                        dialogName.active = false;
+                        dialogGhost.active = false;
+                        target.node.getComponent(Sprite).color = dialogColor;
                     }
 
                     target.schedule(() => {
@@ -106,11 +108,12 @@ export class GameManager extends Component {
             }, target)
 
             if (dialogText[wordth].name != "") {
-                dialogName.active = true;
-                nameLabel.string = dialogText[wordth].name;
+                dialogGhost.active = true;
+                target.node.getComponent(Sprite).color = new Color(255, 255, 255);
             }
             else {
-                dialogName.active = false;
+                dialogGhost.active = false;
+                target.node.getComponent(Sprite).color = dialogColor;
             }
 
             target.schedule(() => {

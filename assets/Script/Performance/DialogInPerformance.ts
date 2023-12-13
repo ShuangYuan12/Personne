@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, log, Node, tween, UIOpacity, Vec3 } from 'cc';
+import { _decorator, Color, Component, Label, log, Node, NodeSpace, Sprite, SpriteFrame, tween, UIOpacity, Vec3 } from 'cc';
 import { GameManager } from '../GameManager';
 const { ccclass, property } = _decorator;
 
@@ -8,12 +8,17 @@ export class DialogInPerformance extends Component {
     @property(Label)
     text: Label;
     @property(Node)
-    dialogName: Node;
-    @property(Label)
-    nameLabel: Label;
+    dialogGhost: Node;
 
     @property(Node)
     performer: Node;
+    @property(Node)
+    woods: Node;
+
+    @property(SpriteFrame)
+    goose: SpriteFrame;
+    @property(SpriteFrame)
+    gooseJump: SpriteFrame;
 
     @property(Node)
     likeBtns: Node;
@@ -23,10 +28,13 @@ export class DialogInPerformance extends Component {
     start() {
 
         let dialogOpacity = this.node.getComponent(UIOpacity);
+        let performerS = this.performer.getComponent(Sprite);
+        let dialogColor = new Color(75, 184, 132);
 
         let dialogText = [
-            { name: "ghost", dialog: "呀，來了一位年輕人" },
-            { name: "ghost", dialog: "坐吧，一起看戲" }
+            { name: "ghost", dialog: "呀，來了一位年輕人，坐吧" },
+            { name: "ghost", dialog: "你運氣很好啊，今天剛好有大師來表演雜耍" },
+            { name: "", dialog: "（一隻大白鵝跳木樁？）" },
         ];
 
         let dialogAfPerfomance = [
@@ -70,25 +78,33 @@ export class DialogInPerformance extends Component {
 
         let afPerformance = () => {
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfPerfomance, this.dialogName, this.nameLabel, dialogOpacity, likeChoose)
+            GameManager.dialog(this, this.text, dialogAfPerfomance, this.dialogGhost, dialogColor, dialogOpacity, likeChoose)
         }
 
         let performance = () => {
             tween(this.performer)
-                .to(0.2, { position: new Vec3(120, 100, 0) })
-                .to(0.2, { position: new Vec3(70, 60, 0) })
+                .delay(0.1)
+                .call(() => performerS.spriteFrame = this.gooseJump)
+                .to(0.2, { position: new Vec3(120, 185, 0) })
+                .to(0.2, { position: new Vec3(25, 75, 0) })
+                .call(() => performerS.spriteFrame = this.goose)
                 .delay(0.2)
-                .to(0.2, { position: new Vec3(0, 140, 0) })
-                .to(0.2, { position: new Vec3(-50, 40, 0) })
+                .call(() => performerS.spriteFrame = this.gooseJump)
+                .to(0.2, { position: new Vec3(-10, 150, 0) })
+                .to(0.2, { position: new Vec3(-105, 145, 0) })
+                .call(() => performerS.spriteFrame = this.goose)
                 .delay(0.2)
-                .to(0.2, { position: new Vec3(-80, 100, 0) })
-                .to(0.2, { position: new Vec3(-120, 50, 0) })
+                .call(() => performerS.spriteFrame = this.gooseJump)
+                .to(0.2, { position: new Vec3(-190, 170, 0) })
+                .to(0.2, { position: new Vec3(-250, 40, 0) })
+                .call(() => performerS.spriteFrame = this.goose)
                 .delay(0.2)
                 .call(() => { afPerformance() })
                 .start();
         }
 
         let gameStart = () => {
+            this.woods.active = false;
             this.game.active = true;
         }
 
@@ -100,16 +116,16 @@ export class DialogInPerformance extends Component {
                 .start()
         }
 
-        GE.addListener('dialogInPerformance', () => GameManager.dialog(this, this.text, dialogText, this.dialogName, this.nameLabel, dialogOpacity, performance), this);
+        GE.addListener('dialogInPerformance', () => GameManager.dialog(this, this.text, dialogText, this.dialogGhost, dialogColor, dialogOpacity, performance), this);
         GE.addListener('clickLike', () => {
             this.likeBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfLike, this.dialogName, this.nameLabel, dialogOpacity, gameStart)
+            GameManager.dialog(this, this.text, dialogAfLike, this.dialogGhost, dialogColor, dialogOpacity, gameStart)
         }, this)
         GE.addListener('clickDislike', () => {
             this.likeBtns.active = false;
             this.node.active = true;
-            GameManager.dialog(this, this.text, dialogAfDisLike, this.dialogName, this.nameLabel, dialogOpacity, gameStart)
+            GameManager.dialog(this, this.text, dialogAfDisLike, this.dialogGhost, dialogColor, dialogOpacity, gameStart)
         }, this)
         GE.addListener('gameFini', (score) => {
             this.game.active = false;
@@ -129,7 +145,7 @@ export class DialogInPerformance extends Component {
                 dialogAfGame = dialogAfSuccessUp;
             }
 
-            GameManager.dialog(this, this.text, dialogAfGame, this.dialogName, this.nameLabel, dialogOpacity, allDialogFin)
+            GameManager.dialog(this, this.text, dialogAfGame, this.dialogGhost, dialogColor, dialogOpacity, allDialogFin)
 
         }, this)
 

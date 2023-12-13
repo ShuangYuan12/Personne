@@ -2198,7 +2198,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 308.02,
+      "width": 596.02,
       "height": 63
     },
     "_anchorPoint": {
@@ -2227,7 +2227,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "接住以下物品各3個",
+    "_string": "接住以下物品各3個，越少秒數越好！",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2363,7 +2363,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 250,
+      "width": 320,
       "height": 100
     },
     "_anchorPoint": {

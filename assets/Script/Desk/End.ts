@@ -35,6 +35,9 @@ export class Start extends Component {
     @property(Button)
     home: Button;
 
+    @property
+    p = undefined;
+
     start() {
 
         let deskOpacity = this.node.getComponent(UIOpacity);
@@ -45,85 +48,84 @@ export class Start extends Component {
         let catTF = GameManager.record.cat.like && GameManager.record.cat.success;
         let rate = { stage: stageTF, performance: performanceTF, cat: catTF };
 
-        let p;
         if (rate.stage && rate.performance && rate.cat == true)
-            p = Math.floor(random() * 6);
+            this.p = Math.floor(random() * 6);
         else if (rate.stage && rate.performance && rate.cat == false)
-            p = Math.floor(random() * 6)
+            this.p = Math.floor(random() * 6)
 
         else if(rate.performance && rate.cat == true){
             if(random() < 0.8)
-                p = Paper.keyboard;
+                this.p = Paper.keyboard;
             else
                 if(random() < 0.3)
-                    p = Paper.keyboard;
+                    this.p = Paper.keyboard;
                 else if(random() < 0.6)
-                    p = Paper.machine;
+                    this.p = Paper.machine;
                 else
-                    p = Paper.plan;
+                    this.p = Paper.plan;
         }
 
         else if(rate.stage && rate.cat == true){
             if(random() < 0.8)
-                p = Paper.design;
+                this.p = Paper.design;
             else
                 if(random() < 0.3)
-                    p = Paper.design;
+                    this.p = Paper.design;
                 else if(random() < 0.6)
-                    p = Paper.guitar;
+                    this.p = Paper.guitar;
                 else
-                    p = Paper.plan;
+                    this.p = Paper.plan;
         }
 
         else if(rate.stage && rate.performance == true){
             if(random() < 0.8)
-                p = Paper.dance;
+                this.p = Paper.dance;
             else
                 if(random() < 0.3)
-                    p = Paper.dance;
+                    this.p = Paper.dance;
                 else if(random() < 0.6)
-                    p = Paper.guitar;
+                    this.p = Paper.guitar;
                 else
-                    p = Paper.machine;
+                    this.p = Paper.machine;
         }
 
         else if(rate.stage){
             if(random() < 0.8)
-                p = Paper.guitar;
+                this.p = Paper.guitar;
             else
                 if(random() < 0.3)
-                    p = Paper.guitar;
+                    this.p = Paper.guitar;
                 else if(random() < 0.6)
-                    p = Paper.dance;
+                    this.p = Paper.dance;
                 else
-                    p = Paper.design;
+                    this.p = Paper.design;
         }
 
         else if(rate.performance){
             if(random() < 0.8)
-                p = Paper.machine;
+                this.p = Paper.machine;
             else
                 if(random() < 0.3)
-                    p = Paper.machine;
+                    this.p = Paper.machine;
                 else if(random() < 0.6)
-                    p = Paper.dance;
+                    this.p = Paper.dance;
                 else
-                    p = Paper.keyboard;
+                    this.p = Paper.keyboard;
         }
 
         else{
             if(random() < 0.8)
-                p = Paper.plan;
+                this.p = Paper.plan;
             else
                 if(random() < 0.3)
-                    p = Paper.plan;
+                    this.p = Paper.plan;
                 else if(random() < 0.6)
-                    p = Paper.keyboard;
+                    this.p = Paper.keyboard;
                 else
-                    p = Paper.design;
+                    this.p = Paper.design;
         }
 
-        this.whichPaper(p, paperS);
+        this.whichPaper(this.p, paperS);
 
         tween(deskOpacity)
             .to(1, { opacity: 255 })

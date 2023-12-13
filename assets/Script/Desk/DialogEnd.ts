@@ -21,6 +21,10 @@ export class Dialog extends Component {
             { name: "", dialog: "紙上怎麼多了一張圖？" }
         ];
 
+        let afFirstEndDialog = () => {
+            GE.dispatchCustomEvent('afFirstEndDialog')
+        }
+
         let EndandReturn = () => {
             GE.dispatchCustomEvent('homeBtnAppear');
         }

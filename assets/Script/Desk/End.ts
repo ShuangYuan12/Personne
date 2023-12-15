@@ -11,8 +11,8 @@ export enum Paper {
     design
 }
 
-@ccclass('Start')
-export class Start extends Component {
+@ccclass('End')
+export class End extends Component {
 
     @property(Node)
     dialog: Node;
@@ -53,73 +53,73 @@ export class Start extends Component {
         else if (rate.stage && rate.performance && rate.cat == false)
             this.p = Math.floor(random() * 6)
 
-        else if(rate.performance && rate.cat == true){
-            if(random() < 0.8)
+        else if (rate.performance && rate.cat == true) {
+            if (random() < 0.8)
                 this.p = Paper.keyboard;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.keyboard;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.machine;
                 else
                     this.p = Paper.plan;
         }
 
-        else if(rate.stage && rate.cat == true){
-            if(random() < 0.8)
+        else if (rate.stage && rate.cat == true) {
+            if (random() < 0.8)
                 this.p = Paper.design;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.design;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.guitar;
                 else
                     this.p = Paper.plan;
         }
 
-        else if(rate.stage && rate.performance == true){
-            if(random() < 0.8)
+        else if (rate.stage && rate.performance == true) {
+            if (random() < 0.8)
                 this.p = Paper.dance;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.dance;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.guitar;
                 else
                     this.p = Paper.machine;
         }
 
-        else if(rate.stage){
-            if(random() < 0.8)
+        else if (rate.stage) {
+            if (random() < 0.8)
                 this.p = Paper.guitar;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.guitar;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.dance;
                 else
                     this.p = Paper.design;
         }
 
-        else if(rate.performance){
-            if(random() < 0.8)
+        else if (rate.performance) {
+            if (random() < 0.8)
                 this.p = Paper.machine;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.machine;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.dance;
                 else
                     this.p = Paper.keyboard;
         }
 
-        else{
-            if(random() < 0.8)
+        else {
+            if (random() < 0.8)
                 this.p = Paper.plan;
             else
-                if(random() < 0.3)
+                if (random() < 0.3)
                     this.p = Paper.plan;
-                else if(random() < 0.6)
+                else if (random() < 0.6)
                     this.p = Paper.keyboard;
                 else
                     this.p = Paper.design;
@@ -137,9 +137,12 @@ export class Start extends Component {
         director.preloadScene('Start');
 
         GE.addListener('homeBtnAppear', () => {
-            this.schedule(() => {
-                this.home.node.active = true
-            }, 1)
+            tween(deskOpacity)
+                .delay(0.2)
+                .to(1, { opacity: 0 })
+                .delay(0.2)
+                .call(() => this.home.node.active = true)
+                .start();
         }, this);
 
         this.home.node.once(Button.EventType.CLICK, () => {

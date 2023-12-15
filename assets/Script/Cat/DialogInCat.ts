@@ -87,7 +87,7 @@ export class DialogInCat extends Component {
             this.node.active = true;
             let dialogAfGame;
 
-            if(time < (20 - 2)){
+            if((time - 2) < 18){
                 GameManager.record.cat.success = 1;
                 dialogAfGame = dialogAfSuccess;
                 this.cat.active = true;
